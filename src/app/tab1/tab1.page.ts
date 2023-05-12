@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { WordsService } from 'src/service/words.service';
+import { Word } from '../model/word';
 
 @Component({
   selector: 'app-tab1',
@@ -8,17 +9,20 @@ import { WordsService } from 'src/service/words.service';
 })
 export class Tab1Page {
 
-  public collection!: any[];
+  public collection!: Word[];
 
   constructor(private wordsService : WordsService) {
     // get all datas
     this.wordsService.getAllDatas().subscribe(data=>{
-      this.collection = data.data
+      this.collection = data
       console.log(this.collection);
     })
 
   }
 
+  onLike(i:Word){
+
+  }
 }
 
 

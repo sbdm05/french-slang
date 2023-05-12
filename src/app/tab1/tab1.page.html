@@ -19,10 +19,10 @@
       <div style='display:flex; justify-content: space-between;
     align-items: center;'>
         <ion-card-title>{{i.french}}</ion-card-title>
-      <ion-icon name="bookmark-outline" style='font-size:1.6rem'></ion-icon>
+      <ion-icon name="bookmark-outline" style='font-size:1.6rem' ></ion-icon>
       </div>
 
-      <!-- <ion-card-subtitle>{{i.english}}</ion-card-subtitle> -->
+
     </ion-card-header>
 
     <ion-card-content>
@@ -31,7 +31,7 @@
     <ion-card-content>
       <div>
 
-        <ion-icon name="thumbs-up-sharp"></ion-icon>
+        <ion-icon name="thumbs-up-sharp" (click)='onLike(i)'></ion-icon>
         {{i.likes}}
       </div>
 
