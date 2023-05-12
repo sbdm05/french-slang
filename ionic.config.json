@@ -1,0 +1,7 @@
+{
+  "name": "french-slang",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
