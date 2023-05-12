@@ -31,7 +31,7 @@
     <ion-card-content>
       <div>
 
-        <ion-icon name="thumbs-up-sharp" (click)='onLike(i)'></ion-icon>
+        <ion-icon name="thumbs-up-sharp" (click)='onLike(i)' [ngClass]="{'liked': i.isLiked}"></ion-icon>
         {{i.likes}}
       </div>
 

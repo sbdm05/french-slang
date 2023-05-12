@@ -11,8 +11,27 @@ export class WordsService {
   constructor(private http: HttpClient) {}
 
   getAllDatas(): Observable<Word[]> {
-    return this.http.get<WordResults>('https://words-backend-tau.vercel.app/api/v1/words/sample').pipe(
-      map(tab=> tab.data.map(word=> new Word(word)))
-    );
+    return this.http
+      .get<WordResults>(
+        'https://words-backend-tau.vercel.app/api/v1/words/sample'
+      )
+      .pipe(map((tab) => tab.data.map((word) => new Word(word))));
+  }
+
+  onIncrementLike(obj: Word, nber: number): Observable<any>{
+    // // créer nouvel obj avec nouvelle valeur
+    const newObj = new Word(obj);
+    newObj.likes = nber;
+    // // passer newObj au serveur
+    return this.http
+      .patch<any>(
+        'https://words-backend-tau.vercel.app/api/v1/words/update-like',
+        newObj
+      )
+      .pipe(
+        map((word: Partial<Word>) =>
+          new Word(word)
+        )
+      );
   }
 }
