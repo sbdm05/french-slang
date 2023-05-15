@@ -10,7 +10,8 @@ export class Word implements WordI {
   mobile_share!: string;
   syn!: string;
   _id!: string;
-  isLiked!: boolean
+  isLiked!: boolean;
+  isSaved!: boolean;
   constructor(obj: Partial<Word>) {
     Object.assign(this, obj);
   }

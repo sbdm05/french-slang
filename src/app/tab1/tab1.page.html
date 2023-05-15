@@ -19,7 +19,7 @@
       <div style='display:flex; justify-content: space-between;
     align-items: center;'>
         <ion-card-title>{{i.french}}</ion-card-title>
-      <ion-icon name="bookmark-outline" style='font-size:1.6rem' ></ion-icon>
+      <ion-icon name="bookmark-outline" style='font-size:1.6rem' (click)='onSave(i)' [ngClass]="{'liked': i.isSaved}" ></ion-icon>
       </div>
 
 

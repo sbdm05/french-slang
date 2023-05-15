@@ -9,7 +9,8 @@ import { Word } from '../model/word';
 })
 export class Tab1Page {
   public collection!: Word[];
-  public tabAlreadySaved!: Word[];
+  public tabAlreadyLiked: Word[] = [];
+  public tabAlreadySaved: Word[] = [];
 
   constructor(private wordsService: WordsService) {
     // get all datas
@@ -21,11 +22,11 @@ export class Tab1Page {
   }
 
   public checkStorage(data: Word[]) {
-    if (localStorage.getItem('saved')) {
+    if (localStorage.getItem('liked')) {
       // extract localStorage
-      this.tabAlreadySaved = JSON.parse(localStorage.getItem('saved') ?? '[]');
+      this.tabAlreadyLiked = JSON.parse(localStorage.getItem('liked') ?? '[]');
       data.forEach((item) => {
-        const objFound = this.tabAlreadySaved.find(
+        const objFound = this.tabAlreadyLiked.find(
           (word) => word._id === item._id
         );
         if (objFound) {
@@ -42,6 +43,7 @@ export class Tab1Page {
     } else {
       // save new localStorage
       console.log('pas de storage à vérifier');
+      this.collection = data;
     }
   }
 
@@ -50,31 +52,68 @@ export class Tab1Page {
     this.manageStorage(i);
   }
 
-  manageStorage(obj: Word) {
+  onSave(i: Word) {
+    // d'abord on vérifie le localStorage
+    this.manageSaveStorage(i);
+  }
+
+  manageSaveStorage(obj: Word) {
     if (localStorage.getItem('saved')) {
       // extract localStorage
       const local: Word[] = JSON.parse(localStorage.getItem('saved') ?? '[]');
       const findItem = local.find((item) => item._id === obj._id);
       if (!findItem) {
-        obj.isLiked = true;
+        // new obj
+        obj.isSaved = true;
         this.tabAlreadySaved.push(obj);
         localStorage.setItem('saved', JSON.stringify(this.tabAlreadySaved));
+      }
+      if (findItem) {
+        // obj existant
+        obj.isSaved = false;
+        this.tabAlreadySaved = this.tabAlreadySaved.filter(
+          (item) => item._id !== findItem._id
+        );
+        localStorage.setItem('saved', JSON.stringify(this.tabAlreadySaved));
+      }
+    } else {
+      // save new localStorage
+      console.log(obj);
+      obj.isSaved = true;
+      this.tabAlreadySaved.push(obj);
+      localStorage.setItem('saved', JSON.stringify(this.tabAlreadySaved));
+    }
+  }
+
+  manageStorage(obj: Word) {
+    if (localStorage.getItem('liked')) {
+      // extract localStorage
+      const local: Word[] = JSON.parse(localStorage.getItem('liked') ?? '[]');
+      const findItem = local.find((item) => item._id === obj._id);
+      if (!findItem) {
+        obj.isLiked = true;
+        this.tabAlreadyLiked.push(obj);
+        localStorage.setItem('liked', JSON.stringify(this.tabAlreadyLiked));
         this.onIncrement(obj);
       }
       if (findItem) {
         // decrement
         console.log('to decrement');
         obj.isLiked = false;
-        this.tabAlreadySaved = this.tabAlreadySaved.filter((item) => item._id !== findItem._id);
+        this.tabAlreadyLiked = this.tabAlreadyLiked.filter(
+          (item) => item._id !== findItem._id
+        );
         // decrement dans mongodb
         // update localstorage
-        localStorage.setItem('saved', JSON.stringify(this.tabAlreadySaved));
+        localStorage.setItem('liked', JSON.stringify(this.tabAlreadyLiked));
         this.onDecrement(obj);
       }
     } else {
       // save new localStorage
-      this.tabAlreadySaved.push(obj);
-      localStorage.setItem('saved', JSON.stringify(this.tabAlreadySaved));
+      console.log(obj);
+      obj.isLiked = true;
+      this.tabAlreadyLiked.push(obj);
+      localStorage.setItem('liked', JSON.stringify(this.tabAlreadyLiked));
       this.onIncrement(obj);
     }
   }
