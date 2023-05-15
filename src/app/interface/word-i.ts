@@ -9,10 +9,12 @@ export type WordI = {
   meaning: string;
   mobile_share: string;
   syn: string;
-}
+  isLiked: boolean;
+  isSaved: boolean;
+};
 
 export type WordResults = {
-  data : WordI[]
-}
+  data: WordI[];
+};
 
-
+export type SearchResults = {success: boolean, msg: WordI[]};

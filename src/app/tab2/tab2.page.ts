@@ -32,8 +32,12 @@ export class Tab2Page {
   public onSearch(i: string) {
     const objToSearch = new Word();
     objToSearch.french = i;
+    console.log(objToSearch)
 
     // call the service
-    this.wordsService.onSearchWord(objToSearch).subscribe((response) => {});
+    this.wordsService.onSearchWord(objToSearch).subscribe((response) => {
+      console.log(response);
+
+    });
   }
 }

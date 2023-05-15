@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable, Subject } from 'rxjs';
-import { WordResults } from 'src/app/interface/word-i';
+import { SearchResults, WordResults } from 'src/app/interface/word-i';
 import { Word } from 'src/app/model/word';
 
 @Injectable({
@@ -35,10 +35,10 @@ export class WordsService {
 
   onSearchWord(i: Word): Observable<Word[]> {
     return this.http
-      .post<WordResults>(
+      .post<SearchResults>(
         'https://words-backend-tau.vercel.app/api/v1/words/search',
         i
       )
-      .pipe(map((tab) => tab.data.map((word) => new Word(word))));
+      .pipe(map((response) => response.msg.map((word) => new Word(word))));
   }
 }
