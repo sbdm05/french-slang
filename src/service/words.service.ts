@@ -32,4 +32,13 @@ export class WordsService {
       )
       .pipe(map((word: Partial<Word>) => new Word(word)));
   }
+
+  onSearchWord(i: Word): Observable<Word[]> {
+    return this.http
+      .post<WordResults>(
+        'https://words-backend-tau.vercel.app/api/v1/words/search',
+        i
+      )
+      .pipe(map((tab) => tab.data.map((word) => new Word(word))));
+  }
 }

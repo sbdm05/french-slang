@@ -1,4 +1,6 @@
 import { Component, Input } from '@angular/core';
+import { WordsService } from 'src/service/words.service';
+import { Word } from '../model/word';
 
 @Component({
   selector: 'app-tab2',
@@ -8,7 +10,7 @@ import { Component, Input } from '@angular/core';
 export class Tab2Page {
   public inputValue!: string;
 
-  constructor() {}
+  constructor(private wordsService: WordsService) {}
 
   public onSubmit() {
     console.log(this.inputValue);
@@ -22,7 +24,16 @@ export class Tab2Page {
       } else {
         console.log(inputWord.length);
         // faire appel au service
+        this.onSearch(inputWord);
       }
     }
+  }
+
+  public onSearch(i: string) {
+    const objToSearch = new Word();
+    objToSearch.french = i;
+
+    // call the service
+    this.wordsService.onSearchWord(objToSearch).subscribe((response) => {});
   }
 }

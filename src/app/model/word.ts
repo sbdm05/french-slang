@@ -12,7 +12,7 @@ export class Word implements WordI {
   _id!: string;
   isLiked!: boolean;
   isSaved!: boolean;
-  constructor(obj: Partial<Word>) {
+  constructor(obj?: Partial<Word>) {
     Object.assign(this, obj);
   }
 }
