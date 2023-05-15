@@ -17,4 +17,4 @@ export type WordResults = {
   data: WordI[];
 };
 
-export type SearchResults = {success: boolean, msg: WordI[]};
+export type SearchResults = { success: boolean; msg: WordI[] | string };

@@ -9,6 +9,7 @@ import { Word } from '../model/word';
 })
 export class Tab2Page {
   public inputValue!: string;
+  public responseCollection!: Word[];
 
   constructor(private wordsService: WordsService) {}
 
@@ -32,12 +33,12 @@ export class Tab2Page {
   public onSearch(i: string) {
     const objToSearch = new Word();
     objToSearch.french = i;
-    console.log(objToSearch)
+    console.log(objToSearch);
 
     // call the service
     this.wordsService.onSearchWord(objToSearch).subscribe((response) => {
       console.log(response);
-
+      this.responseCollection = response;
     });
   }
 }

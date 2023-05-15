@@ -28,5 +28,15 @@
       <ion-button (click)='onSubmit()'>Search</ion-button>
   </form>
 
+<ion-card *ngFor='let i of responseCollection'>
+  <ion-card-header>
+    <ion-card-title>{{i.french}}</ion-card-title>
+  </ion-card-header>
+
+  <ion-card-content>
+    {{i.english}}
+  </ion-card-content>
+</ion-card>
+
 
 </ion-content>

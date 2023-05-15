@@ -35,10 +35,15 @@ export class WordsService {
 
   onSearchWord(i: Word): Observable<Word[]> {
     return this.http
-      .post<SearchResults>(
-        'https://words-backend-tau.vercel.app/api/v1/words/search',
-        i
-      )
-      .pipe(map((response) => response.msg.map((word) => new Word(word))));
+      .post<any>('https://words-backend-tau.vercel.app/api/v1/words/search', i)
+      .pipe(
+        map((response) => {
+          if (Array.isArray(response.msg)) {
+            return response.msg.map((word: Word) => new Word(word));
+          } else {
+            return response.msg;
+          }
+        })
+      );
   }
 }
