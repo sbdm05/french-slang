@@ -19,24 +19,47 @@
         <ion-input
         name='research'
         [(ngModel)]='inputValue'
+        (keyup)='onSubmit()'
         fill="solid"
         label="Search a word in french"
         placeholder="Enter text"
         labelPlacement="stacked"
         [clearInput]="true"></ion-input>
       </ion-item>
-      <ion-button (click)='onSubmit()'>Search</ion-button>
+      <!-- <ion-button (click)='onSubmit()'>Search</ion-button> -->
   </form>
 
-<ion-card *ngFor='let i of responseCollection'>
-  <ion-card-header>
-    <ion-card-title>{{i.french}}</ion-card-title>
-  </ion-card-header>
+  <ion-card *ngFor='let i of responseCollection'>
+    <ion-card-header>
+      <div style='display:flex; justify-content: space-between;
+      align-items: center;'>
+        <ion-card-title>{{i.french}}</ion-card-title>
+        <ion-icon name="bookmark-outline" style='font-size:1.6rem' (click)='onSave(i)' [ngClass]="{'liked': i.isSaved}">
+        </ion-icon>
+      </div>
 
-  <ion-card-content>
-    {{i.english}}
-  </ion-card-content>
-</ion-card>
+
+    </ion-card-header>
+
+    <ion-card-content>
+      {{i.english}}
+    </ion-card-content>
+    <ion-card-content>
+      <div style='display:flex; justify-content: space-between;
+      align-items: center;'>
+        <span>
+
+          <ion-icon name="thumbs-up-sharp" (click)='onLike(i)' [ngClass]="{'liked': i.isLiked}"></ion-icon>
+          {{i.likes}}
+        </span>
+        <span>
+          <ion-icon name="share-social-outline" style='font-size:1.6rem' (click)='onShare(i)'></ion-icon>
+
+        </span>
+      </div>
+
+    </ion-card-content>
+  </ion-card>
 
 
 </ion-content>
