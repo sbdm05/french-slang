@@ -10,7 +10,12 @@
 
   <ion-card *ngFor='let i of tabAlreadySaved'>
     <ion-card-header>
+      <div style='display:flex; justify-content: space-between;
+          align-items: center;'>
       <ion-card-title>{{i.french}}</ion-card-title>
+      <ion-icon name="trash-bin-outline" style='font-size:1rem' (click)='onDelete(i)'>
+      </ion-icon>
+      </div>
     </ion-card-header>
 
     <ion-card-content>
