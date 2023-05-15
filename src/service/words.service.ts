@@ -18,7 +18,7 @@ export class WordsService {
       .pipe(map((tab) => tab.data.map((word) => new Word(word))));
   }
 
-  onIncrementLike(obj: Word, nber: number): Observable<any>{
+  onUpdateLike(obj: Word, nber: number): Observable<any>{
     // // créer nouvel obj avec nouvelle valeur
     const newObj = new Word(obj);
     newObj.likes = nber;

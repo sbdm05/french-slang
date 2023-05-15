@@ -65,11 +65,11 @@ export class Tab1Page {
         // decrement
         console.log('to decrement');
         obj.isLiked = false;
+        this.tabAlreadySaved = this.tabAlreadySaved.filter((item) => item._id !== findItem._id);
         // decrement dans mongodb
         // update localstorage
-
-
-
+        localStorage.setItem('saved', JSON.stringify(this.tabAlreadySaved));
+        this.onDecrement(obj);
       }
     } else {
       // save new localStorage
@@ -86,7 +86,21 @@ export class Tab1Page {
     nberOfLike++;
     console.log(nberOfLike);
     // appel au service pour methode incrementer like
-    this.wordsService.onIncrementLike(obj, nberOfLike).subscribe((data) => {
+    this.wordsService.onUpdateLike(obj, nberOfLike).subscribe((data) => {
+      console.log(data.msg, 'updated obj');
+      const newObj = data.msg;
+      Object.assign(obj, newObj);
+    });
+  }
+
+  onDecrement(obj: Word) {
+    let nberOfLike = Number(obj.likes);
+    console.log(typeof nberOfLike);
+    // incrementer
+    nberOfLike--;
+    console.log(nberOfLike);
+    // appel au service pour methode incrementer like
+    this.wordsService.onUpdateLike(obj, nberOfLike).subscribe((data) => {
       console.log(data.msg, 'updated obj');
       const newObj = data.msg;
       Object.assign(obj, newObj);
