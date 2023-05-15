@@ -7,8 +7,7 @@ import { Word } from '../model/word';
   styleUrls: ['tab3.page.scss'],
 })
 export class Tab3Page {
-
-  public collectionFavorites!: Word[]
+  public tabAlreadySaved!: Word[];
   constructor() {}
 
   ionViewWillEnter() {
@@ -17,6 +16,15 @@ export class Tab3Page {
   }
 
   public checkStorage() {
+    if (localStorage.getItem('saved')) {
+      // extract localStorage
+      this.tabAlreadySaved = JSON.parse(localStorage.getItem('saved') ?? '[]');
+      console.log(this.tabAlreadySaved)
 
+    } else {
+      // save new localStorage
+      console.log('pas de storage');
+
+    }
   }
 }

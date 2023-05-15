@@ -17,11 +17,12 @@ export class Tab1Page {
     this.wordsService.getAllDatas().subscribe((data) => {
       //this.collection = data;
       console.log(this.collection);
-      this.checkStorage(data);
+      this.checkLikeStorage(data);
+      this.checkSaveStorage(data);
     });
   }
 
-  public checkStorage(data: Word[]) {
+  public checkLikeStorage(data: Word[]) {
     if (localStorage.getItem('liked')) {
       // extract localStorage
       this.tabAlreadyLiked = JSON.parse(localStorage.getItem('liked') ?? '[]');
@@ -47,9 +48,35 @@ export class Tab1Page {
     }
   }
 
+  public checkSaveStorage(data: Word[]) {
+    if (localStorage.getItem('saved')) {
+      // extract localStorage
+      this.tabAlreadySaved = JSON.parse(localStorage.getItem('saved') ?? '[]');
+      data.forEach((item) => {
+        const objFound = this.tabAlreadySaved.find(
+          (word) => word._id === item._id
+        );
+        if (objFound) {
+          console.log(objFound, 'existes dans le localStorage saved');
+          //modifier item
+          objFound.isSaved = true;
+          Object.assign(item, objFound);
+          this.collection = data;
+        } else {
+          console.log('pas dans le localstorage saved');
+          this.collection = data;
+        }
+      });
+    } else {
+      // save new localStorage
+      console.log('pas de storage à vérifier');
+      this.collection = data;
+    }
+  }
+
   onLike(i: Word) {
     // d'abord on vérifie le localStorage
-    this.manageStorage(i);
+    this.manageLikeStorage(i);
   }
 
   onSave(i: Word) {
@@ -60,39 +87,38 @@ export class Tab1Page {
   manageSaveStorage(obj: Word) {
     if (localStorage.getItem('saved')) {
       // extract localStorage
-      const local: Word[] = JSON.parse(localStorage.getItem('saved') ?? '[]');
+      let local: Word[] = JSON.parse(localStorage.getItem('saved') ?? '[]');
       const findItem = local.find((item) => item._id === obj._id);
       if (!findItem) {
         // new obj
         obj.isSaved = true;
-        this.tabAlreadySaved.push(obj);
-        localStorage.setItem('saved', JSON.stringify(this.tabAlreadySaved));
+        local.unshift(obj);
+        localStorage.setItem('saved', JSON.stringify(local));
       }
       if (findItem) {
         // obj existant
         obj.isSaved = false;
-        this.tabAlreadySaved = this.tabAlreadySaved.filter(
-          (item) => item._id !== findItem._id
-        );
-        localStorage.setItem('saved', JSON.stringify(this.tabAlreadySaved));
+        local = local.filter((item) => item._id !== findItem._id);
+        localStorage.setItem('saved', JSON.stringify(local));
       }
     } else {
       // save new localStorage
       console.log(obj);
       obj.isSaved = true;
-      this.tabAlreadySaved.push(obj);
-      localStorage.setItem('saved', JSON.stringify(this.tabAlreadySaved));
+      let local = [];
+      local.unshift(obj);
+      localStorage.setItem('saved', JSON.stringify(local));
     }
   }
 
-  manageStorage(obj: Word) {
+  manageLikeStorage(obj: Word) {
     if (localStorage.getItem('liked')) {
       // extract localStorage
       const local: Word[] = JSON.parse(localStorage.getItem('liked') ?? '[]');
       const findItem = local.find((item) => item._id === obj._id);
       if (!findItem) {
         obj.isLiked = true;
-        this.tabAlreadyLiked.push(obj);
+        this.tabAlreadyLiked.unshift(obj);
         localStorage.setItem('liked', JSON.stringify(this.tabAlreadyLiked));
         this.onIncrement(obj);
       }
@@ -112,7 +138,7 @@ export class Tab1Page {
       // save new localStorage
       console.log(obj);
       obj.isLiked = true;
-      this.tabAlreadyLiked.push(obj);
+      this.tabAlreadyLiked.unshift(obj);
       localStorage.setItem('liked', JSON.stringify(this.tabAlreadyLiked));
       this.onIncrement(obj);
     }
