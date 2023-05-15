@@ -213,20 +213,4 @@ export class Tab1Page {
   }
 }
 
-/**
- *
- * au like
- * appel au service avec incrementation
- * prendre likes value
- * check if number
- * increment
- * save new value
- * si compliqué de refresh component avec new value, alors on modifie provisoirement la valeur affichée
- * save le like dans un localstorage 'liked' qui sera appelé au démarrage de l'application
- *
- * au save
- * save dans un localstorage 'saved' qui sera appelé au démarrage du composant favorites et au démarrage du composant
- * tab1
- *
- *
- */
+
