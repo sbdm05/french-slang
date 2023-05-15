@@ -11,13 +11,16 @@
   <ion-card *ngFor='let i of tabAlreadySaved'>
     <ion-card-header>
       <ion-card-title>{{i.french}}</ion-card-title>
-      <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
     </ion-card-header>
 
     <ion-card-content>
-      Here's a small text description for the card content. Nothing more, nothing less.
+      {{i.english__1}}
     </ion-card-content>
   </ion-card>
 
-  <app-explore-container name="Tab 3 page" *ngIf='!tabAlreadySaved'></app-explore-container>
+  <app-explore-container name="Tab 3 page" *ngIf='!tabAlreadySaved || tabAlreadySaved.length === 0'>
+    <ion-icon name="folder-open" style="font-size: 2rem"></ion-icon>
+    <h2 style="font-size: 2rem">Empty for the moment</h2>
+    <h5>Visit the -- tab and press <ion-icon name="bookmark-outline"></ion-icon> to save your favorite slang words</h5>
+  </app-explore-container>
 </ion-content>
