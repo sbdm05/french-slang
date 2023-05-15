@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { map, Observable, Subject } from 'rxjs';
 import { WordResults } from 'src/app/interface/word-i';
 import { Word } from 'src/app/model/word';
 
@@ -10,6 +10,8 @@ import { Word } from 'src/app/model/word';
 export class WordsService {
   constructor(private http: HttpClient) {}
 
+  public removeItem$ = new Subject<Word>();
+
   getAllDatas(): Observable<Word[]> {
     return this.http
       .get<WordResults>(
@@ -18,7 +20,7 @@ export class WordsService {
       .pipe(map((tab) => tab.data.map((word) => new Word(word))));
   }
 
-  onUpdateLike(obj: Word, nber: number): Observable<any>{
+  onUpdateLike(obj: Word, nber: number): Observable<any> {
     // // créer nouvel obj avec nouvelle valeur
     const newObj = new Word(obj);
     newObj.likes = nber;
@@ -28,10 +30,6 @@ export class WordsService {
         'https://words-backend-tau.vercel.app/api/v1/words/update-like',
         newObj
       )
-      .pipe(
-        map((word: Partial<Word>) =>
-          new Word(word)
-        )
-      );
+      .pipe(map((word: Partial<Word>) => new Word(word)));
   }
 }

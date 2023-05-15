@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { WordsService } from 'src/service/words.service';
 import { Word } from '../model/word';
 import { Share } from '@capacitor/share';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-tab1',
@@ -12,14 +13,32 @@ export class Tab1Page {
   public collection!: Word[];
   public tabAlreadyLiked: Word[] = [];
   public tabAlreadySaved: Word[] = [];
+  public subRemovedItem!: Subscription;
 
   constructor(private wordsService: WordsService) {
     // get all datas
     this.wordsService.getAllDatas().subscribe((data) => {
-      //this.collection = data;
-      console.log(this.collection);
       this.checkLikeStorage(data);
       this.checkSaveStorage(data);
+    });
+  }
+
+  ionViewWillEnter() {
+    // if (this.collection) {
+    //   this.checkLikeStorage(this.collection);
+    //   this.checkSaveStorage(this.collection);
+    // }
+    this.subRemovedItem = this.wordsService.removeItem$.subscribe((data) => {
+      console.log(data);
+      const objRemoved: Word = data;
+      this.collection.forEach((item) => {
+        //const objFound = this.collection.find(i=> i._id === objRemoved._id);
+
+        if (item._id === objRemoved._id) {
+          objRemoved.isSaved = false;
+          Object.assign(item, objRemoved);
+        }
+      });
     });
   }
 
@@ -180,13 +199,17 @@ export class Tab1Page {
   public async onShare(obj: Word) {
     console.log(obj);
     const word = `Just found out that "${obj.french}" in french, means "${obj.english__1}"`;
-    console.log(word)
+    console.log(word);
     await Share.share({
-      title: "French Slang",
+      title: 'French Slang',
       text: word,
       url: 'https://ohmycode.io/',
       dialogTitle: 'Check this french slang word',
     });
+  }
+
+  public onDestroy() {
+    this.subRemovedItem.unsubscribe();
   }
 }
 

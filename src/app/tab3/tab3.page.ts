@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Subject } from 'rxjs';
+import { WordsService } from 'src/service/words.service';
 import { Word } from '../model/word';
 
 @Component({
@@ -8,7 +10,7 @@ import { Word } from '../model/word';
 })
 export class Tab3Page {
   public tabAlreadySaved!: Word[];
-  constructor() {}
+  constructor(private wordsService: WordsService) {}
 
   ionViewWillEnter() {
     console.log('test');
@@ -27,6 +29,7 @@ export class Tab3Page {
   }
 
   public onDelete(i: Word) {
+    this.wordsService.removeItem$.next(i);
     if (localStorage.getItem('saved')) {
       // extract localStorage
       this.tabAlreadySaved = JSON.parse(localStorage.getItem('saved') ?? '[]');
