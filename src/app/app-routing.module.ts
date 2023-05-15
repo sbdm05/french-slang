@@ -5,6 +5,10 @@ const routes: Routes = [
   {
     path: '',
     loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
+  },
+  {
+    path: 'social-share',
+    loadChildren: () => import('./utils/components/social-share/social-share.module').then( m => m.SocialSharePageModule)
   }
 ];
 @NgModule({

@@ -29,10 +29,17 @@
       {{i.english}}
     </ion-card-content>
     <ion-card-content>
-      <div>
+      <div style='display:flex; justify-content: space-between;
+    align-items: center;'>
+        <span>
 
-        <ion-icon name="thumbs-up-sharp" (click)='onLike(i)' [ngClass]="{'liked': i.isLiked}"></ion-icon>
-        {{i.likes}}
+          <ion-icon name="thumbs-up-sharp" (click)='onLike(i)' [ngClass]="{'liked': i.isLiked}"></ion-icon>
+          {{i.likes}}
+        </span>
+        <span>
+          <ion-icon name="share-social-outline" style='font-size:1.6rem' (click)='onShare(i)'></ion-icon>
+
+        </span>
       </div>
 
     </ion-card-content>

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { WordsService } from 'src/service/words.service';
 import { Word } from '../model/word';
+import { Share } from '@capacitor/share';
 
 @Component({
   selector: 'app-tab1',
@@ -174,6 +175,18 @@ export class Tab1Page {
 
   identify(index: number, item: Word) {
     return item.likes;
+  }
+
+  public async onShare(obj: Word) {
+    console.log(obj);
+    const word = `Just found out that "${obj.french}" in french, means "${obj.english__1}"`;
+    console.log(word)
+    await Share.share({
+      title: "French Slang",
+      text: word,
+      url: 'https://ohmycode.io/',
+      dialogTitle: 'Check this french slang word',
+    });
   }
 }
 
