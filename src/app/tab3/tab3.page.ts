@@ -76,31 +76,3 @@ export class Tab3Page {
     }
   }
 }
-
-//  const findItem = local.find((item) => item._id === obj._id);
-//       if (!findItem) {
-//         obj.isLiked = true;
-//         this.tabAlreadyLiked.unshift(obj);
-//         localStorage.setItem('liked', JSON.stringify(this.tabAlreadyLiked));
-//         this.onIncrement(obj);
-//       }
-//       if (findItem) {
-//         // decrement
-//         console.log('to decrement');
-//         obj.isLiked = false;
-//         this.tabAlreadyLiked = this.tabAlreadyLiked.filter(
-//           (item) => item._id !== findItem._id
-//         );
-//         // decrement dans mongodb
-//         // update localstorage
-//         localStorage.setItem('liked', JSON.stringify(this.tabAlreadyLiked));
-//         this.onDecrement(obj);
-//       }
-//     } else {
-//       // save new localStorage
-//       console.log(obj);
-//       obj.isLiked = true;
-//       this.tabAlreadyLiked.unshift(obj);
-//       localStorage.setItem('liked', JSON.stringify(this.tabAlreadyLiked));
-//       this.onIncrement(obj);
-//     }

@@ -220,7 +220,6 @@ export class Tab2Page {
     if (this.inputValue === '') {
       this.isEmpty = true;
       // clearInput changed, inputValue is empty
-     
     }
   }
 }
