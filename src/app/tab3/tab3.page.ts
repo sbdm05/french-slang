@@ -9,7 +9,7 @@ import { Word } from '../model/word';
   styleUrls: ['tab3.page.scss'],
 })
 export class Tab3Page {
-  public tabAlreadySaved!: Word[];
+  public tabAlreadySaved: Word[] = [];
   public filteredTab: Word[] = [];
 
   public inputValue!: string;
@@ -18,6 +18,7 @@ export class Tab3Page {
   ionViewWillEnter() {
     console.log('test');
     this.checkStorage();
+    this.filteredTab = [];
   }
 
   public checkStorage() {
@@ -48,12 +49,24 @@ export class Tab3Page {
   }
 
   public onSubmit() {
-    this.filteredTab = []
+    this.filteredTab = [];
     console.log(this.inputValue);
-    this.filteredTab = this.tabAlreadySaved.filter((item) =>
-      item.french.includes(this.inputValue)
-    );
-    console.log(this.filteredTab);
+    if (!this.inputValue) {
+      console.log('this field needs something !');
+    } else {
+      const inputWord = this.inputValue.trim();
+      this.filteredTab = this.tabAlreadySaved.filter((item) =>
+        item.french.includes(inputWord)
+      );
+      console.log(this.filteredTab);
+    }
+  }
+
+  public onInputChange() {
+    if (this.inputValue === '') {
+      // clearInput changed, inputValue is empty
+      this.filteredTab = [];
+    }
   }
 }
 

@@ -8,15 +8,23 @@
 
 <ion-content [fullscreen]="true">
 
-  <form>
+  <form *ngIf='tabAlreadySaved.length > 0'>
     <ion-item>
-      <ion-input name='research' [(ngModel)]='inputValue' (keyup)='onSubmit()' fill="solid"
-        label="Search from your favorites" placeholder="Enter text" labelPlacement="stacked" [clearInput]="true"></ion-input>
+      <ion-input
+      name='research'
+      [(ngModel)]='inputValue'
+      (keyup)='onSubmit()'
+      fill="solid"
+      label="Search from your favorites"
+      placeholder="Enter text"
+      labelPlacement="stacked"
+      (ngModelChange)='onInputChange()'
+      [clearInput]="true"></ion-input>
     </ion-item>
     <!-- <ion-button (click)='onSubmit()'>Search</ion-button> -->
   </form>
 
-  <ng-container *ngIf='!this.filteredTab || filteredTab.length === 0'>
+<ng-container *ngIf='!this.filteredTab || filteredTab.length === 0'>
     <ion-card *ngFor='let i of tabAlreadySaved'>
     <ion-card-header>
       <div style='display:flex; justify-content: space-between;
@@ -55,7 +63,5 @@
     <ion-icon name="folder-open" style="font-size: 2rem"></ion-icon>
     <h2 style="font-size: 2rem">Empty for the moment</h2>
     <ion-button routerLink='/tabs/tab1'>Go check new words</ion-button>
-
-
   </app-explore-container>
 </ion-content>
