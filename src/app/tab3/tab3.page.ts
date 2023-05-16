@@ -11,6 +11,7 @@ import { Word } from '../model/word';
 export class Tab3Page {
   public tabAlreadySaved: Word[] = [];
   public filteredTab: Word[] = [];
+  public isEmpty = false;
 
   public inputValue!: string;
   constructor(private wordsService: WordsService) {}
@@ -49,6 +50,7 @@ export class Tab3Page {
   }
 
   public onSubmit() {
+    this.isEmpty = false;
     this.filteredTab = [];
     console.log(this.inputValue);
     if (!this.inputValue) {
@@ -59,10 +61,15 @@ export class Tab3Page {
         item.french.includes(inputWord)
       );
       console.log(this.filteredTab);
+      if (this.filteredTab.length === 0) {
+        console.log('pas de mot correspondant');
+        this.isEmpty = true;
+      }
     }
   }
 
   public onInputChange() {
+    this.isEmpty = false;
     if (this.inputValue === '') {
       // clearInput changed, inputValue is empty
       this.filteredTab = [];

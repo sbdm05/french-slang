@@ -24,7 +24,14 @@
     <!-- <ion-button (click)='onSubmit()'>Search</ion-button> -->
   </form>
 
-<ng-container *ngIf='!this.filteredTab || filteredTab.length === 0'>
+  <ng-container *ngIf='isEmpty'>
+    <ion-item>
+      No matching word !
+    </ion-item>
+  </ng-container>
+
+  <!-- réponse du localstorage -->
+<ng-container *ngIf='!this.filteredTab || filteredTab.length === 0 && !isEmpty'>
     <ion-card *ngFor='let i of tabAlreadySaved'>
     <ion-card-header>
       <div style='display:flex; justify-content: space-between;
@@ -41,7 +48,8 @@
   </ion-card>
 </ng-container>
 
-  <ng-container *ngIf='this.filteredTab.length > 0'>
+<!-- réponse filtrée -->
+  <ng-container *ngIf='this.filteredTab.length > 0 && !isEmpty'>
     <ion-card *ngFor='let i of filteredTab'>
       <ion-card-header>
         <div style='display:flex; justify-content: space-between;
@@ -58,7 +66,7 @@
     </ion-card>
   </ng-container>
 
-
+<!-- quand absence de localstorage -->
   <app-explore-container name="Tab 3 page" *ngIf='!tabAlreadySaved || tabAlreadySaved.length === 0'>
     <ion-icon name="folder-open" style="font-size: 2rem"></ion-icon>
     <h2 style="font-size: 2rem">Empty for the moment</h2>
