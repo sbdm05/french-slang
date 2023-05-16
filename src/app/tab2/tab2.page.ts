@@ -13,11 +13,13 @@ export class Tab2Page {
   public responseCollection!: Word[];
   public tabAlreadyLiked: Word[] = [];
   public tabAlreadySaved: Word[] = [];
+  public isEmpty = false;
 
   constructor(private wordsService: WordsService) {}
 
   public onSubmit() {
     console.log(this.inputValue);
+    this.isEmpty = false;
     // clean input
     if (!this.inputValue) {
       console.log('this field needs something !');
@@ -29,16 +31,16 @@ export class Tab2Page {
         console.log(inputWord.length);
         // faire appel au service
         this.onSearch(inputWord);
-
       }
     }
   }
 
   public onSearch(i: string) {
+    this.isEmpty = false;
     const objToSearch = new Word();
     objToSearch.french = i;
     console.log(objToSearch);
-   
+
     // call the service
     this.wordsService.onSearchWord(objToSearch).subscribe((data) => {
       console.log(data);
@@ -47,6 +49,8 @@ export class Tab2Page {
         // this.responseCollection = response;
         this.checkLikeStorage(data);
         this.checkSaveStorage(data);
+      } else {
+        this.isEmpty = true;
       }
     });
   }

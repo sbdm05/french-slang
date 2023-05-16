@@ -28,7 +28,9 @@
       </ion-item>
       <!-- <ion-button (click)='onSubmit()'>Search</ion-button> -->
   </form>
-
+  <ng-container *ngIf='isEmpty'>
+    <ion-item>No matching found</ion-item>
+  </ng-container>
   <ion-card *ngFor='let i of responseCollection'>
     <ion-card-header>
       <div style='display:flex; justify-content: space-between;
