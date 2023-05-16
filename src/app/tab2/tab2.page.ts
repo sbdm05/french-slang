@@ -214,4 +214,13 @@ export class Tab2Page {
       dialogTitle: 'Check this french slang word',
     });
   }
+
+  public onInputChange() {
+    this.isEmpty = false;
+    if (this.inputValue === '') {
+      this.isEmpty = true;
+      // clearInput changed, inputValue is empty
+     
+    }
+  }
 }

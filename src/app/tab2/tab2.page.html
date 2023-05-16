@@ -24,6 +24,7 @@
         label="Search a word in french"
         placeholder="Enter text"
         labelPlacement="stacked"
+        (ngModelChange)='onInputChange()'
         [clearInput]="true"></ion-input>
       </ion-item>
       <!-- <ion-button (click)='onSubmit()'>Search</ion-button> -->
@@ -31,6 +32,7 @@
   <ng-container *ngIf='isEmpty'>
     <ion-item>No matching found</ion-item>
   </ng-container>
+  <ng-container *ngIf='!isEmpty'>
   <ion-card *ngFor='let i of responseCollection'>
     <ion-card-header>
       <div style='display:flex; justify-content: space-between;
@@ -62,6 +64,8 @@
 
     </ion-card-content>
   </ion-card>
+</ng-container>
+
 
 
 </ion-content>
