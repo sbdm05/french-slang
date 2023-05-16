@@ -3,6 +3,7 @@ import { WordsService } from 'src/service/words.service';
 import { Word } from '../model/word';
 import { Share } from '@capacitor/share';
 import { Subscription } from 'rxjs';
+import { InfiniteScrollCustomEvent } from '@ionic/angular';
 
 @Component({
   selector: 'app-tab1',
@@ -17,9 +18,20 @@ export class Tab1Page {
 
   constructor(private wordsService: WordsService) {
     // get all datas
+    this.getDatas();
+  }
+
+  getDatas() {
     this.wordsService.getAllDatas().subscribe((data) => {
-      this.checkLikeStorage(data);
-      this.checkSaveStorage(data);
+      if (this.collection) {
+        this.collection.push(...data)
+        this.checkLikeStorage(this.collection);
+        this.checkSaveStorage(this.collection);
+      } else {
+        console.log(data);
+        this.checkLikeStorage(data);
+        this.checkSaveStorage(data);
+      }
     });
   }
 
@@ -208,9 +220,14 @@ export class Tab1Page {
     });
   }
 
+  onIonInfinite(ev: Event) {
+    this.getDatas();
+    setTimeout(() => {
+      (ev as InfiniteScrollCustomEvent).target.complete();
+    }, 500);
+  }
+
   public onDestroy() {
     this.subRemovedItem.unsubscribe();
   }
 }
-
-

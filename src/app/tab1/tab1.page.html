@@ -14,7 +14,8 @@
   </ion-header> -->
 
   <!-- <app-explore-container name="Tab 1 page"></app-explore-container> -->
-  <ion-card *ngFor='let i of collection'>
+  <ion-list>
+     <ion-card *ngFor='let i of collection'>
     <ion-card-header>
       <div style='display:flex; justify-content: space-between;
     align-items: center;'>
@@ -44,4 +45,8 @@
 
     </ion-card-content>
   </ion-card>
+  </ion-list>
+  <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)" loadingSpinner='bubbles'>
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>

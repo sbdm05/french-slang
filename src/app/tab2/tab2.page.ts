@@ -29,6 +29,7 @@ export class Tab2Page {
         console.log(inputWord.length);
         // faire appel au service
         this.onSearch(inputWord);
+
       }
     }
   }
@@ -37,7 +38,7 @@ export class Tab2Page {
     const objToSearch = new Word();
     objToSearch.french = i;
     console.log(objToSearch);
-
+   
     // call the service
     this.wordsService.onSearchWord(objToSearch).subscribe((data) => {
       console.log(data);
