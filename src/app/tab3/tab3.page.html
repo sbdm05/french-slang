@@ -8,7 +8,16 @@
 
 <ion-content [fullscreen]="true">
 
-  <ion-card *ngFor='let i of tabAlreadySaved'>
+  <form>
+    <ion-item>
+      <ion-input name='research' [(ngModel)]='inputValue' (keyup)='onSubmit()' fill="solid"
+        label="Search from your favorites" placeholder="Enter text" labelPlacement="stacked" [clearInput]="true"></ion-input>
+    </ion-item>
+    <!-- <ion-button (click)='onSubmit()'>Search</ion-button> -->
+  </form>
+
+  <ng-container *ngIf='!this.filteredTab || filteredTab.length === 0'>
+    <ion-card *ngFor='let i of tabAlreadySaved'>
     <ion-card-header>
       <div style='display:flex; justify-content: space-between;
           align-items: center;'>
@@ -22,6 +31,25 @@
       {{i.english__1}}
     </ion-card-content>
   </ion-card>
+</ng-container>
+
+  <ng-container *ngIf='this.filteredTab.length > 0'>
+    <ion-card *ngFor='let i of filteredTab'>
+      <ion-card-header>
+        <div style='display:flex; justify-content: space-between;
+            align-items: center;'>
+          <ion-card-title>{{i.french}}</ion-card-title>
+          <ion-icon name="trash-bin-outline" style='font-size:1rem' (click)='onDelete(i)'>
+          </ion-icon>
+        </div>
+      </ion-card-header>
+
+      <ion-card-content>
+        {{i.english__1}}
+      </ion-card-content>
+    </ion-card>
+  </ng-container>
+
 
   <app-explore-container name="Tab 3 page" *ngIf='!tabAlreadySaved || tabAlreadySaved.length === 0'>
     <ion-icon name="folder-open" style="font-size: 2rem"></ion-icon>

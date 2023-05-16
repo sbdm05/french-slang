@@ -10,6 +10,9 @@ import { Word } from '../model/word';
 })
 export class Tab3Page {
   public tabAlreadySaved!: Word[];
+  public filteredTab: Word[] = [];
+
+  public inputValue!: string;
   constructor(private wordsService: WordsService) {}
 
   ionViewWillEnter() {
@@ -42,6 +45,15 @@ export class Tab3Page {
       // save new localStorage
       console.log('pas de storage');
     }
+  }
+
+  public onSubmit() {
+    this.filteredTab = []
+    console.log(this.inputValue);
+    this.filteredTab = this.tabAlreadySaved.filter((item) =>
+      item.french.includes(this.inputValue)
+    );
+    console.log(this.filteredTab);
   }
 }
 
